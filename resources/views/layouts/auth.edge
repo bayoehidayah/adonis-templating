@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ config('app.appName') }}</title>
+    <link rel="icon" type="image shortcut" href="./images/logo.png'">
+    <meta name="csrf-token" content="{{ csrfField }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- PWA -->
+    <meta name="theme-color" content="#f0f2f5" />
+    <link rel="manifest" href="./pwa/pwa.webmanifest" />
+    <link rel="apple-touch-icon" href="./images/logopwa.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="./images/logopwa.png" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta charset="utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Gudea:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="./css/bs-login.css" />
+    <style>
+        body {
+            background: linear-gradient(45deg, #35394a 0%, #1f222e 100%);
+            transition: all 1s ease;
+        }
+
+        body .authent .loading {
+            -webkit-animation: spin 1s linear infinite;
+            -moz-animation: spin 1s linear infinite;
+            animation: spin 1s linear infinite;
+        }
+
+        #LoginContent .login-wrapper {
+            background: #35394a;
+            background: linear-gradient(45deg, #35394a 0%, #1f222e 100%);
+            border-radius: 0 0 15px 15px;
+            border-top: 5px solid#198754;
+            /* transform: scale(1);
+            transition: all 1s ease-in-out; */
+        }
+
+        /* #LoginContent .login.success .login-wrapper {
+            transition-delay: 5s;
+            transform: scale(50);
+          } */
+
+        #LoginContent .login::before {
+            position: absolute;
+            content: "";
+            bottom: -70px;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            margin: 0 auto;
+            transform: scale(0.8);
+            -webkit-filter: blur(5vw);
+            -moz-filter: blur(5vw);
+            -ms-filter: blur(5vw);
+            filter: blur(5vw);
+            background: linear-gradient(270deg, #0fffc1, #7e0fff);
+            background-size: 200% 200%;
+            animation: animateGlow 4s ease infinite;
+            transition: all 1s ease;
+            opacity: 0.4;
+        }
+
+        @keyframes animateGlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .login h3 {
+            animation: textColor 10s ease infinite;
+        }
+
+        @keyframes textColor {
+            0% {
+                color: #7e0fff;
+            }
+
+            50% {
+                color: #0fffc1;
+            }
+
+            100% {
+                color: #7e0fff;
+            }
+        }
+
+        @keyframes border-pulsate-success {
+            0% {
+                border-color: rgb(1, 145, 62);
+            }
+
+            50% {
+                border-color: rgb(1, 145, 62, 0%);
+            }
+
+            100% {
+                border-color: rgb(1, 145, 62);
+            }
+        }
+
+        @keyframes border-pulsate-error {
+            0% {
+                border-color: rgb(145, 1, 1);
+            }
+
+            50% {
+                border-color: rgba(145, 1, 1, 0);
+            }
+
+            100% {
+                border-color: rgb(145, 1, 1);
+            }
+        }
+
+        #LoginContent .login.success .login-wrapper {
+            animation: border-pulsate-success 2s infinite;
+        }
+
+        #LoginContent .login.error .login-wrapper {
+            animation: border-pulsate-error 2s infinite;
+        }
+
+        #LoginContent .login.error::before {
+            background: rgb(145, 1, 1);
+        }
+
+        #LoginContent .login.success::before {
+            background: rgb(1, 145, 62);
+        }
+
+        @-moz-keyframes spin {
+            100% {
+                -moz-transform: rotate(360deg);
+            }
+        }
+
+        @-webkit-keyframes spin {
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            #LoginContent .login-wrapper {
+                height: 100vh;
+                border-radius: 0;
+                overflow: scroll;
+            }
+        }
+
+        @media screen and (max-width: 768px) and (min-height: 820px) {
+            .disclaimer {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 8px;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+
+            body .login_fields input[type="text"],
+            body .login_fields input[type="password"],
+            body .login_fields .input-group-text,
+            .area-captcha,
+            .area-captcha input[type="text"] {
+                color: #afb1be;
+                background: #32364a !important;
+                border-color: #393d52 !important;
+            }
+
+            body .form-check-label,
+            .loading,
+            .feedback p {
+                color: #afb1be;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            body {
+                background: #f0f2f5;
+            }
+
+            #LoginContent .login-wrapper {
+                background: #fff;
+            }
+        }
+
+        .install-pwa {
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
+        }
+
+        #install-pwa-mob {
+            display: none;
+        }
+
+    </style>
+    <!-- jQuery -->
+    <script src="./plugins/jquery/jquery.min.js"></script>
+</head>
+
+<body>
+    <section id='LoginContent' class="d-flex justify-content-center align-items-center vh-100">
+        @!section('content')
+    </section>
+    <div id="install-pwa-des" class="d-none d-md-block fade">
+        <div class="install-pwa position-fixed py-3 px-4 rounded-3 text-white">
+            <span>Tambahkan Aplikasi ini ke layar utama?</span> &nbsp;
+            <a class="install-btn-pwa text-success fw-bold text-decoration-none" style="cursor: pointer">Ya</a>
+            <!-- <a id="install-btn-des" style="cursor: pointer; color: #0a96a6; font-weight: bold;">Tidak</a> -->
+        </div>
+    </div>
+    <script>
+        //Detect Device
+        function getDeviceType() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            // Windows Phone must come first because its UA also contains "Android"
+            if (/windows phone/i.test(userAgent)) {
+                return "Windows Phone";
+            }
+            if (/android/i.test(userAgent)) {
+                return "Android";
+            }
+            // iOS detection from: http://stackoverflow.com/a/9039885/177710
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return "iOS";
+            }
+            return "unknown";
+        }
+        var device = getDeviceType(),
+            promptinstall,
+            absensiapp = $('.SaavHeader p:contains("Absensi")').length ?
+            true :
+            false;
+
+        $("html").attr("data-device", device == "unknown" ? "pc" : device);
+
+        window.addEventListener("beforeinstallprompt", (e) => {
+            e.preventDefault();
+            promptinstall = e;
+            if (device != "Android" && device != "iOS") {
+                setTimeout(() => {
+                    showInstallToast();
+                }, 1000);
+            }
+        });
+
+        function installapp() {
+            hideMyInstallToast();
+            promptinstall.prompt();
+            promptinstall.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === "accepted") {
+                    console.log("User accepted the install prompt");
+                } else {
+                    console.log("User dismissed the install prompt");
+                }
+            });
+        }
+
+        if ($(".install-btn-pwa").length > 0) {
+            $(".install-btn-pwa").click(function () {
+                if (device == "Android" && absensiapp) {
+                    window.open(
+                        "https://play.google.com/store/apps/details?id=com.biroumum.absensi",
+                        "_blank"
+                    );
+                } else {
+                    installapp();
+                }
+            });
+        }
+
+        console.log(device);
+
+        window.addEventListener("appinstalled", (evt) => {
+            console.log("INSTALL: Success");
+        });
+
+        function showInstallToast() {
+            $("#install-pwa-des").addClass("show");
+        }
+
+        function hideMyInstallToast() {
+            $("#install-pwa-des").removeClass("show");
+        }
+
+        function successLogin(txt = null) {
+            $(".success").toggleClass("d-none");
+            $(".success").find("h3").html(txt);
+            $(".authent").toggleClass("d-none");
+            $("#LoginContent .login").addClass("success");
+            setTimeout(function () {
+                document.location.reload();
+            }, 2000)
+        }
+
+        function failedLogin(txterror = null) {
+            $("#LoginContent .login").addClass("error");
+            $(".authent").toggleClass("d-none");
+            $("#error").find("p").html(txterror);
+            $("#error").toggleClass("d-none");
+            setTimeout(function () {
+                $(".logwrap").show();
+                $("#error").toggleClass("d-none");
+                $("#LoginContent .login").removeClass("error").removeClass("success");
+            }, 2000);
+        }
+
+
+        $("#login_form").submit(function (e) {
+            e.preventDefault();
+
+            $(".logwrap").hide();
+            $(".authent").toggleClass("d-none");
+
+            const url = $(this).attr("action");
+            var formData = new FormData(this);
+            formData.append("_token", $('meta[name="csrf-token"]').attr('content'));
+
+            $.ajax({
+                type: "post",
+                url: url,
+                data: formData,
+                contentType: false,
+                processData: false,
+                dataType: "JSON",
+                beforeSend: function () {
+                    $('.logwrap').hide();
+                    $(".authent").show().animate({
+                        opacity: 1
+                    }, {
+                        duration: 200,
+                        queue: false
+                    }).addClass('visible');
+                },
+                success: function (response) {
+                    setTimeout(function () {
+                        $(".authent").animate({
+                            opacity: 0
+                        }, {
+                            duration: 200,
+                            queue: false
+                        }).removeClass('visible').hide();
+                        if (response.result == "error") {
+                            failedLogin(response.title);
+                            $('meta[name="csrf-token"]').attr('content', response
+                                .new_token);
+                        } else {
+                            successLogin(response.title);
+                        }
+                    }, 1000);
+                },
+                error: function (textStatus) {
+                    setTimeout(function () {
+                        $(".authent").animate({
+                            opacity: 0
+                        }, {
+                            duration: 200,
+                            queue: false
+                        }).removeClass('visible').hide();
+                        failedLogin(textStatus);
+                    }, 1000);
+                }
+            });
+        });
+
+    </script>
+</body>
+
+</html>

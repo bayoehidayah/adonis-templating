@@ -1,0 +1,82 @@
+@layout('layouts/auth')
+
+@section('content')
+<form id="login_form" action="" method="POST">
+{{ request.url() }}
+    <div class="login position-relative">
+        <div class="login-wrapper position-relative text-center pt-5 pb-3">
+            <img src="./images/logo.png" class="logoatas d-block mx-auto img-fluid mb-3 w-25" />
+            <div class="logwrap">
+                <div class="SaavHeader mt-4 px-5">
+                    <h3 class="fs-3">{{ config('app.appName') }}</h3>
+                    <p class="text-muted mb-5">
+                        Dekripsi Aplikasi
+                    </p>
+                </div>
+                <div class="px-5 mb-3 text-md-start text-muted">
+                    <span>Sign in to start your session</span>
+                </div>
+                <div class="input-group login_fields">
+                    <span class="input-group-text rounded-0 border-bottom-0 border-start-0 py-3 px-4 bg-light"
+                        for="InputNIK"><span class="material-symbols-outlined fs-5">person</span></span>
+                    <input id="InputNIK" type="text"
+                        class="form-control rounded-0 border-bottom-0 border-end-0 py-3 bg-white" placeholder="NIK"
+                        name="nik" aria-label="NIK" aria-describedby="basic-addon1" />
+                </div>
+                <div class="input-group login_fields mb-3">
+                    <span class="input-group-text rounded-0 border-start-0 py-3 px-4 bg-light" for="InputPass"><span
+                            class="material-symbols-outlined fs-5">key</span></span>
+                    <input id="InputPass" type="password" name="password"
+                        class="form-control rounded-0 border-end-0 py-3 bg-white" placeholder="Password"
+                        aria-label="Password" aria-describedby="basic-addon1" />
+                </div>
+                @if(config('app.use_captcha'))
+                <div class="area-captcha px-3 pt-2 pb-3 border-top border-bottom bg-light bg-gradient mb-4">
+                    <p class="text-start d-block mb-2">Captcha</p>
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <img src="https://via.placeholder.com/100x40/FFFFFF/000000/?text=ABCDE"
+                                class="border rounded-3" alt="..." />
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <input class="form-control" type="text" placeholder="Masukkan Captcha"
+                                aria-label="Masukkan Captcha" />
+                        </div>
+                    </div>
+                </div>
+                @endif
+                <div class="d-md-flex align-items-center px-5">
+                    <div class="form-check flex-grow-1 d-md-flex text-center my-4 my-md-0">
+                        <input type="checkbox" class="form-check-input float-none float-md-start" id="remember" name="remember"/>
+                        <label class="ms-2 form-check-label" for="remember">Remember Me</label>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success border-2 rounded-pill px-4">
+                        Login
+                    </button>
+                </div>
+            </div>
+            <div class="authent d-none mx-auto my-5 text-center text-uppercase">
+                <span class="loading material-symbols-outlined fs-1 mt-3 mb-1">autorenew</span>
+                <p class="mb-5 text-muted">Mengautentikasi...</p>
+            </div>
+            <div class="feedback my-5 d-none text-center success">
+                <h3>Selamat Datang<br />Rizky!</h3>
+                <p>Mengalihkan...</p>
+            </div>
+            <div class="feedback my-5 d-none text-center error" id="error">
+                <h3>Terjadi Kesalahan</h3>
+                <p>
+                    Mohon maaf, terjadi kesalahan ketika melakukan proses
+                    autentikasi, silahkan coba lagi.
+                </p>
+            </div>
+            <div class="disclaimer text-muted mt-5 mb-2">
+                <small>Copyright © {{ new Date().getFullYear() }} {{ config('app.appName') }} - All rights reserved<br />
+                    <span class="install-btn-pwa d-md-none" style="cursor: pointer"><span
+                            class="material-symbols-outlined align-middle">download</span>Install
+                        Aplikasi</span></small>
+            </div>
+        </div>
+    </div>
+</form>
+@endsection
